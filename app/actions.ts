@@ -2,9 +2,9 @@
 
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-import { and, eq } from 'drizzle-orm'
+import { and, eq, inArray, sql } from 'drizzle-orm'
 import { getDb } from '@/lib/db'
-import { topicPapers, topicQueries, topics } from '@/drizzle/schema'
+import { papers, topicPapers, topicQueries, topics } from '@/drizzle/schema'
 import {
   expandTopic,
   suggestReplacement,
@@ -230,8 +230,33 @@ export async function updateTopicAction(
   return { saved: true }
 }
 
+/**
+ * Delete a topic and, since a paper is only worth keeping while some topic is
+ * tracking it, any of its papers that no other topic references. `papers` is
+ * shared across topics, so a paper stays if it does — only the ones this
+ * topic had exclusively are removed.
+ */
 export async function deleteTopic(topicId: number): Promise<void> {
-  await getDb().delete(topics).where(eq(topics.id, topicId))
+  const db = getDb()
+
+  const linked = await db
+    .select({ paperId: topicPapers.paperId })
+    .from(topicPapers)
+    .where(eq(topicPapers.topicId, topicId))
+  const paperIds = linked.map((l) => l.paperId)
+
+  // Cascades away this topic's topic_queries and topic_papers rows.
+  await db.delete(topics).where(eq(topics.id, topicId))
+
+  if (paperIds.length > 0) {
+    await db.delete(papers).where(
+      and(
+        inArray(papers.id, paperIds),
+        sql`not exists (select 1 from ${topicPapers} where ${topicPapers.paperId} = ${papers.id})`,
+      ),
+    )
+  }
+
   revalidatePath('/')
   redirect('/')
 }

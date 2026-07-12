@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { countPapersByQuery, getTopic, listTopicQueries } from '@/lib/queries'
 import { QueryEditor } from '@/app/query-editor'
 import { toEditorQueries } from '@/lib/editor-queries'
+import { DeleteTopicButton } from '../delete-topic-button'
 import { TopicForm } from '../topic-form'
 
 export const dynamic = 'force-dynamic'
@@ -57,6 +58,17 @@ export default async function ManageTopicPage({
             description={topic.description}
             initial={toEditorQueries(queries, paperCounts)}
           />
+        </div>
+      </section>
+
+      <section className="mt-6 rounded-lg border border-red-600/20 p-5 dark:border-red-400/20">
+        <h2 className="text-sm font-semibold">Danger zone</h2>
+        <p className="mt-1 text-sm text-black/60 dark:text-white/60">
+          Deletes this topic and its searches. Papers it found are also deleted, unless another
+          topic is still tracking them.
+        </p>
+        <div className="mt-4">
+          <DeleteTopicButton topicId={topicId} name={topic.name} />
         </div>
       </section>
     </main>
