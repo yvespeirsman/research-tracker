@@ -30,7 +30,7 @@ similarity between its embedding and that of the topic description. This informs
 relevance of each paper to their topic.
 - **Find similar papers:** from any paper's page, users can identify similar papers that cover the
 same ground.
-- **Label suggestions.** once a user has tagged at least one paper with a label, they can ask the
+- **Label suggestions:** once a user has tagged at least one paper with a label, they can ask the
 tracker to suggest other papers that could match the same label. This makes it easier to identify
 all papers that are relevant to a subtopic.
 
