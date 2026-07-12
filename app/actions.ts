@@ -11,7 +11,6 @@ import {
   validateQuery,
   type QueryCheck,
 } from '@/lib/expansion'
-import { getDrizzleStore, runIngest, type RunSummary } from '@/lib/ingest'
 import {
   findSimilarPapers as queryFindSimilarPapers,
   suggestPapersForLabel as querySuggestPapersForLabel,
@@ -294,22 +293,4 @@ export async function findSimilarPapers(topicId: number, paperId: number): Promi
 /** Unlabeled papers in this topic that look like they belong under `label`. */
 export async function suggestPapersForLabel(topicId: number, label: string): Promise<LabelSuggestion[]> {
   return querySuggestPapersForLabel(topicId, label)
-}
-
-/**
- * Run ingestion in-process. No HTTP hop and no CRON_SECRET — this is the same
- * `runIngest` the cron route calls.
- */
-export async function refreshNow(): Promise<RunSummary> {
-  const summary = await runIngest(getDrizzleStore())
-  revalidatePath('/')
-  return summary
-}
-
-/** Same as `refreshNow`, scoped to one topic's queries. */
-export async function refreshTopic(topicId: number): Promise<RunSummary> {
-  const summary = await runIngest(getDrizzleStore(), {}, topicId)
-  revalidatePath(`/topics/${topicId}`)
-  revalidatePath('/')
-  return summary
 }

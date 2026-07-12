@@ -3,7 +3,7 @@ import { and, asc, count, countDistinct, desc, eq, sql } from 'drizzle-orm'
 import { getDb } from '@/lib/db'
 import { papers, topicPapers, topicQueries, topics } from '@/drizzle/schema'
 import { monthFromArxivId } from '@/lib/arxiv'
-import { averageVector, cosineSimilarity, normalize } from '@/lib/embeddings'
+import { averageVector, cosineSimilarity, normalize } from '@/lib/embeddings/math'
 
 export interface TopicSummary {
   id: number

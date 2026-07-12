@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useTransition } from 'react'
-import { refreshNow, refreshTopic } from './actions'
+import { refreshNow, refreshTopic } from './refresh-actions'
 import type { RunSummary } from '@/lib/ingest'
 
 /**

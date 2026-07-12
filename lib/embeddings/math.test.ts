@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { averageVector, cosineSimilarity, normalize } from './index'
+import { averageVector, cosineSimilarity, normalize } from './math'
 
 describe('averageVector', () => {
   it('takes the per-dimension mean', () => {
