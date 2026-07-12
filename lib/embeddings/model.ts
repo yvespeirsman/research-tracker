@@ -1,4 +1,15 @@
-import { pipeline, type FeatureExtractionPipeline } from '@huggingface/transformers'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
+import { env, pipeline, type FeatureExtractionPipeline } from '@huggingface/transformers'
+
+/**
+ * The library's default cache directory lives inside node_modules, which is
+ * part of the deployed bundle and read-only at runtime on Vercel — the first
+ * call would fail trying to mkdir it to download and cache the model.
+ * `os.tmpdir()` is the one writable path in a serverless function (and just
+ * the regular OS temp dir locally), so redirect the cache there.
+ */
+env.cacheDir = join(tmpdir(), 'transformers-cache')
 
 /** Runs fully locally via ONNX — no API key, no per-call cost. */
 export const EMBEDDING_MODEL = 'Xenova/all-MiniLM-L6-v2'
