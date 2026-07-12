@@ -1,0 +1,55 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1783670319406,
+      "tag": "0000_foamy_vulture",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1783689929272,
+      "tag": "0001_add_paper_label",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1783756770509,
+      "tag": "0002_add_paper_notes",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1783774506145,
+      "tag": "0003_remove_relevance_scoring",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1783775877827,
+      "tag": "0004_add_embedding_scoring",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1783780734878,
+      "tag": "0005_add_first_seen_run_id",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1783781357822,
+      "tag": "0006_add_search_vector",
+      "breakpoints": true
+    }
+  ]
+}

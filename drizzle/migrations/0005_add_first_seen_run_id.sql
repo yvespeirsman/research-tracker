@@ -1,0 +1,3 @@
+ALTER TABLE "topic_papers" ADD COLUMN "first_seen_run_id" integer;--> statement-breakpoint
+ALTER TABLE "topic_papers" ADD CONSTRAINT "topic_papers_first_seen_run_id_ingest_runs_id_fk" FOREIGN KEY ("first_seen_run_id") REFERENCES "public"."ingest_runs"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+CREATE INDEX "topic_papers_topic_run_idx" ON "topic_papers" USING btree ("topic_id","first_seen_run_id");

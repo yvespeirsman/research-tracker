@@ -1,0 +1,1 @@
+ALTER TABLE "topic_papers" ADD COLUMN "label" text;
